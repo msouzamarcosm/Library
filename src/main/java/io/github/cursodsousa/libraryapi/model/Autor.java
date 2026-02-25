@@ -1,8 +1,10 @@
 package io.github.cursodsousa.libraryapi.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.UUID;
 @Table(name = "tb_autor")
 @Getter
 @Setter
+@ToString(exclude = "livros")
 public class Autor {
 
     @Id
