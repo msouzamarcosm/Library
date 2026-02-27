@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -26,7 +27,7 @@ public class Autor {
     private String nome;
 
     @Column(name = "data_nascimento", nullable = false)
-    private LocalDateTime dataNascimento;
+    private LocalDate dataNascimento;
 
     @Column (name = "nascionalidade", length = 50, nullable = false)
     private String nascionalidade;
