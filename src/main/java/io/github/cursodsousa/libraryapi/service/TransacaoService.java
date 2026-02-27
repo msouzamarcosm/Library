@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Service
 public class TransacaoService {
@@ -20,6 +21,19 @@ public class TransacaoService {
     private AutorRepository autorRepository;
     @Autowired
     private LivroRepository livroRepository;
+
+
+
+    @Transactional
+    public void atualizacaoSemAtualizar(){
+
+        var livro =  livroRepository
+                .findById(UUID.fromString("035b4cd3-bae8-46dc-88cf-9f7525aa44b3"))
+                .orElse(null);
+
+        livro.setDataPublicacao(LocalDate.of(1936,1,2));
+
+    }
 
     @Transactional
     public void executar(){
@@ -50,4 +64,6 @@ public class TransacaoService {
 
 
     }
+
+
 }
