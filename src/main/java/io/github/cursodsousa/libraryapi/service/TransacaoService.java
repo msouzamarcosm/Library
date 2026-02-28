@@ -39,7 +39,7 @@ public class TransacaoService {
     public void executar(){
         Autor autor = new Autor();
         autor.setNome("Clarice Lispector");
-        autor.setNascionalidade("Brasileira");
+        autor.setNacionalidade("Brasileira");
         autor.setDataNascimento(LocalDate.of(1920, 12, 10));
 
         autorRepository.save(autor);
