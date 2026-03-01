@@ -9,7 +9,7 @@ import java.util.UUID;
 public record AutorDTO(
         UUID id,
         String nome,
-        LocalDate dataNascimento,
+        LocalDate dataNacimento,
         String nacionalidade) {
 
 
@@ -17,7 +17,7 @@ public record AutorDTO(
         Autor autor = new Autor();
         autor.setNome(this.nome);
         autor.setNacionalidade(this.nacionalidade);
-        autor.setDataNascimento(this.dataNascimento);
+        autor.setDataNacimento(this.dataNacimento);
         return autor;
 
     }

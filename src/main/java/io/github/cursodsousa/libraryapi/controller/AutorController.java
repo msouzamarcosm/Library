@@ -1,6 +1,8 @@
 package io.github.cursodsousa.libraryapi.controller;
 
 import io.github.cursodsousa.libraryapi.controller.dto.AutorDTO;
+import io.github.cursodsousa.libraryapi.controller.dto.ErroResposta;
+import io.github.cursodsousa.libraryapi.exceptin.RegistroDuplicadoException;
 import io.github.cursodsousa.libraryapi.model.Autor;
 import io.github.cursodsousa.libraryapi.service.AutorService;
 import org.springframework.beans.factory.ListableBeanFactory;
@@ -25,17 +27,25 @@ public class AutorController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> salvar(@RequestBody AutorDTO autor){
-        Autor autorEntidade = autor.mapearParaAutor();
-        service.salvar(autorEntidade);
+    public ResponseEntity<Object> salvar(@RequestBody AutorDTO autor){
+        try {
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(autorEntidade.getId())
-                .toUri();
+            Autor autorEntidade = autor.mapearParaAutor();
+            service.salvar(autorEntidade);
 
-        return ResponseEntity.created(location).build();
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(autorEntidade.getId())
+                    .toUri();
+
+
+            return ResponseEntity.created(location).build();
+        } catch (RegistroDuplicadoException e){
+            var erroDTO = ErroResposta.conflito(e.getMessage());
+            return ResponseEntity.status(erroDTO.status()).body(erroDTO);
+
+        }
 
     }
 
@@ -47,7 +57,7 @@ public class AutorController {
             Autor autor = autorOptional.get();
             AutorDTO dto = new AutorDTO(autor.getId(),
                     autor.getNome(),
-                    autor.getDataNascimento(),
+                    autor.getDataNacimento(),
                     autor.getNacionalidade());
             return ResponseEntity.ok(dto);
         }
@@ -66,7 +76,7 @@ public class AutorController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<List<AutorDTO>> pesquisar (
            @RequestParam(value = "nome", required = false) String nome,
            @RequestParam(value = "nacionalidade", required = false) String nacionalidade){
@@ -75,7 +85,7 @@ public class AutorController {
         List<AutorDTO> lista = resultado.stream().map(autor -> new AutorDTO(
                 autor.getId(),
                 autor.getNome(),
-                autor.getDataNascimento(),
+                autor.getDataNacimento(),
                 autor.getNacionalidade())
                 ).toList();
 
@@ -96,7 +106,7 @@ public class AutorController {
         var autor = autorOptional.get();
         autor.setNome(dto.nome());
         autor.setNacionalidade(dto.nacionalidade());
-        autor.setDataNascimento(dto.dataNascimento());
+        autor.setDataNacimento(dto.dataNacimento());
         service.atualizar(autor);
 
         return ResponseEntity.noContent().build();
