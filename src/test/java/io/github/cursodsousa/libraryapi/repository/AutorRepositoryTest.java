@@ -32,8 +32,8 @@ public class AutorRepositoryTest {
 
         Autor autor = new Autor();
         autor.setNome("Maria");
-        autor.setNascionalidade("Brasileira");
-        autor.setDataNascimento(LocalDate.of(1951, 1, 31).atStartOfDay());
+        autor.setNacionalidade("Brasileira");
+        autor.setDataNascimento(LocalDate.of(1951, 1, 31));
 
         var autorSalvo = repository.save(autor);
         System.out.println("Autor Salvo: " + autorSalvo);
@@ -52,7 +52,7 @@ public class AutorRepositoryTest {
             System.out.println("Dados do autor: ");
             System.out.println(possivelAutor.get());
 
-            autorEncontrado.setDataNascimento(LocalDate.of(1960, 1, 30).atStartOfDay());
+            autorEncontrado.setDataNascimento(LocalDate.of(1960, 1, 30));
 
             repository.save(autorEncontrado);
         }
@@ -87,8 +87,8 @@ public class AutorRepositoryTest {
     void salvarAutorComLivrosTest() {
         Autor autor = new Autor();
         autor.setNome("Graciliano Ramos");
-        autor.setNascionalidade("Brasileiro");
-        autor.setDataNascimento(LocalDate.of(1892, 10, 27).atStartOfDay());
+        autor.setNacionalidade("Brasileiro");
+        autor.setDataNascimento(LocalDate.of(1892, 10, 27));
 
         Livro livro = new Livro();
         livro.setIsbn("978-85-209-1209-6");

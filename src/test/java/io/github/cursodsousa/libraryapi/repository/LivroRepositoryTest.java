@@ -34,7 +34,7 @@ class LivroRepositoryTest {
         livro.setDataPublicacao(LocalDate.of(1986, 1, 2));
 
 
-        Autor autor = autorRepository.findById(UUID.fromString("79d41b1d-314d-46a7-84f9-a4493ffee9ce"))
+        Autor autor = autorRepository.findById(UUID.fromString("0908eb1c-5c57-4fbf-8120-98475a084c14"))
                 .orElse(null);
 
 
@@ -57,8 +57,8 @@ class LivroRepositoryTest {
 
         Autor autor = new Autor();
         autor.setNome("Joao");
-        autor.setNascionalidade("Brasileira");
-        autor.setDataNascimento(LocalDate.of(1951, 1, 31).atStartOfDay());
+        autor.setNacionalidade("Brasileira");
+        autor.setDataNascimento(LocalDate.of(1951, 1, 31));
 
 
 
@@ -80,8 +80,8 @@ class LivroRepositoryTest {
 
         Autor autor = new Autor();
         autor.setNome("Jose");
-        autor.setNascionalidade("Brasileira");
-        autor.setDataNascimento(LocalDate.of(1951, 1, 31).atStartOfDay());
+        autor.setNacionalidade("Brasileira");
+        autor.setDataNascimento(LocalDate.of(1951, 1, 31));
 
         autorRepository.save(autor);
 

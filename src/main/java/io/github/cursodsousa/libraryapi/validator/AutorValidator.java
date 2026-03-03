@@ -3,7 +3,6 @@ package io.github.cursodsousa.libraryapi.validator;
 import io.github.cursodsousa.libraryapi.exceptin.RegistroDuplicadoException;
 import io.github.cursodsousa.libraryapi.model.Autor;
 import io.github.cursodsousa.libraryapi.repository.AutorRepository;
-import org.springframework.expression.spel.ast.OpAnd;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -14,6 +13,7 @@ public class AutorValidator {
     private AutorRepository repository;
 
     public AutorValidator(AutorRepository repository) {
+
         this.repository = repository;
     }
 
@@ -24,14 +24,17 @@ public class AutorValidator {
     }
 
     private boolean existeAutorCadastrado(Autor autor){
-        Optional<Autor> autorEncontrado = repository.findByNomeAndDataNacimentoAndNacionalidade(
+        Optional<Autor> autorEncontrado = repository.findByNomeAndDataNascimentoAndNacionalidade(
                 autor.getNome(),
-                autor.getDataNacimento(),
+                autor.getDataNascimento(),
                 autor.getNacionalidade()
         );
+        if (autorEncontrado.isEmpty()){
+            return false;
+        }
 
         if (autor.getId() == null){
-            return autorEncontrado.isPresent();
+            return true;
         }
 
         return !autor.getId().equals(autorEncontrado.get().getId()) && autorEncontrado.isPresent();
