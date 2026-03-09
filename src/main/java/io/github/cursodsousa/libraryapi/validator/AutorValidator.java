@@ -1,6 +1,6 @@
 package io.github.cursodsousa.libraryapi.validator;
 
-import io.github.cursodsousa.libraryapi.exceptin.RegistroDuplicadoException;
+import io.github.cursodsousa.libraryapi.exception.RegistroDuplicadoException;
 import io.github.cursodsousa.libraryapi.model.Autor;
 import io.github.cursodsousa.libraryapi.repository.AutorRepository;
 import org.springframework.stereotype.Component;

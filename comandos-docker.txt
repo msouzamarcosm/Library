@@ -8,7 +8,7 @@ netstat -aof | findstr 5432
 docker create network library-network
 
 # Rodar container Postgre na versao 16.3
-docker run --name librarydb --network library-network -p 5432:5432 -e POSTGRES_PASSWORD=postgres_password -e POSTGRES_USER=postgres -e POSTGRES_DB=library -d  --network library-network postgres:16.3
+docker run --name librarydb --network library-network -p 5432:5432 -e POSTGRES_PASSWORD= -postgres_passworde POSTGRES_USER=postgres -e POSTGRES_DB=library -d  --network library-network postgres:16.3
 
 # Rodar Pgadmin 4
 

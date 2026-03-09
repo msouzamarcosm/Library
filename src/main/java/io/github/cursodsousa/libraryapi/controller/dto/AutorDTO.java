@@ -1,7 +1,6 @@
 package io.github.cursodsousa.libraryapi.controller.dto;
 
 
-import io.github.cursodsousa.libraryapi.model.Autor;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -23,12 +22,5 @@ public record AutorDTO(
         String nacionalidade) {
 
 
-    public Autor mapearParaAutor(){
-        Autor autor = new Autor();
-        autor.setNome(this.nome);
-        autor.setNacionalidade(this.nacionalidade);
-        autor.setDataNascimento(this.dataNascimento);
-        return autor;
 
-    }
 }

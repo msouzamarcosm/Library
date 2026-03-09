@@ -1,4 +1,4 @@
-package io.github.cursodsousa.libraryapi.exceptin;
+package io.github.cursodsousa.libraryapi.exception;
 
 public class OperacaoNaoPermitidaException extends RuntimeException{
     public OperacaoNaoPermitidaException(String message) {
