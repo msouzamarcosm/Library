@@ -10,8 +10,10 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface LivroRepository extends JpaRepository<Livro, UUID> , JpaSpecificationExecutor<Livro> {
@@ -22,7 +24,7 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> , JpaSpecifi
 
     List<Livro> findByTitulo(String titulo);
 
-    List<Livro> findByIsbn (String isbn);
+    Optional<Livro> findByIsbn (String isbn);
 
     List<Livro> findByDataPublicacaoBetween (LocalDate inicio, LocalDate fim);
 

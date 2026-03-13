@@ -2,6 +2,7 @@ package io.github.cursodsousa.libraryapi.controller.common;
 
 import io.github.cursodsousa.libraryapi.controller.dto.ErroCampo;
 import io.github.cursodsousa.libraryapi.controller.dto.ErroResposta;
+import io.github.cursodsousa.libraryapi.exception.CampoInvalidoException;
 import io.github.cursodsousa.libraryapi.exception.OperacaoNaoPermitidaException;
 import io.github.cursodsousa.libraryapi.exception.RegistroDuplicadoException;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.swing.plaf.PanelUI;
 import java.util.List;
+import java.util.concurrent.RecursiveTask;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -47,6 +49,15 @@ public class GlobalExceptionHandler {
         return ErroResposta.respostaPadrao(e.getMessage());
 
     }
+    @ExceptionHandler(CampoInvalidoException.class)
+    @ResponseStatus (HttpStatus.UNPROCESSABLE_ENTITY)
+    public ErroResposta handleCampoInvalidoException (CampoInvalidoException e){
+        return new ErroResposta(HttpStatus.UNPROCESSABLE_ENTITY.value(), "Erro de validação",
+                List.of(new ErroCampo(e.getCampo(), e.getMessage())));
+    }
+
+
+
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public  ErroResposta handleErrosNaoTratados (RuntimeException e){

@@ -3,15 +3,19 @@ package io.github.cursodsousa.libraryapi.service;
 import io.github.cursodsousa.libraryapi.model.GeneroLivro;
 import io.github.cursodsousa.libraryapi.model.Livro;
 import io.github.cursodsousa.libraryapi.repository.LivroRepository;
-import io.github.cursodsousa.libraryapi.repository.specs.LivroSpecs;
+import io.github.cursodsousa.libraryapi.validator.LivroValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
+
 import java.util.Optional;
 import java.util.UUID;
-import static  io.github.cursodsousa.libraryapi.repository.specs.LivroSpecs.*;
+
+import static io.github.cursodsousa.libraryapi.repository.specs.LivroSpecs.*;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +23,10 @@ public class LivroService {
 
     private final LivroRepository repository;
 
+    private final LivroValidator validator;
+
     public Livro salvar(Livro livro) {
+        validator.validar(livro);
         return repository.save(livro);
     }
 
@@ -32,8 +39,14 @@ public class LivroService {
         repository.delete(livro);
     }
 
-    public List<Livro> pesquisa(
-            String isbn, String titulo, String nomeAutor, GeneroLivro genero, Integer anoPublicacao){
+    public Page<Livro> pesquisa(
+            String isbn,
+            String titulo,
+            String nomeAutor,
+            GeneroLivro genero,
+            Integer anoPublicacao,
+            Integer pagina,
+            Integer tamanhopagina){
 
       //  Specification<Livro> specs = Specification.
        //         where(LivroSpecs.isbnEqual(isbn))
@@ -56,8 +69,24 @@ public class LivroService {
             specs = specs.and(generoEqual(genero));
         }
 
+        if (anoPublicacao != null){
+            specs = specs.and(anoPublicacaoEqual(anoPublicacao));
+        }
 
+        if (nomeAutor != null){
+            specs = specs.and(nomeAutorLike(nomeAutor));
+        }
 
-        return repository.findAll(specs);
+        Pageable pageRequest = PageRequest.of(pagina, tamanhopagina);
+
+        return repository.findAll(specs, pageRequest);
+    }
+
+    public void atualizar(Livro livro) {
+        if (livro.getId() == null){
+            throw new IllegalArgumentException("O id do livro deve ser informado para atualização");
+        }
+        validator.validar(livro);
+        repository.save(livro);
     }
 }

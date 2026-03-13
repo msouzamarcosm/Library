@@ -1,6 +1,7 @@
 package io.github.cursodsousa.libraryapi.repository;
 
 
+import com.fasterxml.jackson.annotation.OptBoolean;
 import io.github.cursodsousa.libraryapi.model.Autor;
 import io.github.cursodsousa.libraryapi.model.GeneroLivro;
 import io.github.cursodsousa.libraryapi.model.Livro;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @SpringBootTest
@@ -121,6 +123,13 @@ class LivroRepositoryTest {
     @Test
     void deletePorGenero(){
         repository.deleteByGenero(GeneroLivro.CIENCIA);
+    }
+
+
+    @Test
+    void pesquisaPorISBNTest(){
+        Optional<Livro> livro = repository.findByIsbn("65465-848744");
+        livro.ifPresent(System.out::println);
     }
 
 

@@ -14,13 +14,20 @@ public record CadastroLivroDTO(
         @ISBN
         @NotBlank(message = "Campo obrigatório")
         String isbn,
+
         @NotBlank(message = "Campo obrigatório")
         String titulo,
+
         @NotNull(message = "Campo obrigatório")
+
         @Past(message = "Não pode ser data futura")
         LocalDate dataPublicacao,
+
+        @NotNull(message = "Campo obrigatório")
         GeneroLivro genero,
+
         BigDecimal preco,
+
         @NotNull(message = "Campo obrigatório")
         UUID idAutor) {
 
