@@ -14,3 +14,24 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
+
+
+logging:
+  file:
+    name: application.log
+  level:
+    root: warn
+    io:
+      github:
+        cursodsousa: trace
+    org:
+      springFramework:
+        web: debug
+
+management:
+  server:
+    port: 9090
+  endpoints:
+    web:
+      exposure:
+        include: "*"

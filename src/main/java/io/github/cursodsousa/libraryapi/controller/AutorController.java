@@ -9,6 +9,7 @@ import io.github.cursodsousa.libraryapi.model.Autor;
 import io.github.cursodsousa.libraryapi.service.AutorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("autores")
 @RequiredArgsConstructor
+@Slf4j
 public class AutorController implements GenericController {
 
     private final AutorService service;
@@ -33,6 +35,9 @@ public class AutorController implements GenericController {
 
     @PostMapping
     public ResponseEntity<Void> salvar(@RequestBody @Valid AutorDTO dto) {
+
+        log.info("Cadastrando novo autor: {}", dto.nome());
+
         Autor autor = mapper.toEntity(dto);
         service.salvar(autor);
 
@@ -61,6 +66,8 @@ public class AutorController implements GenericController {
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deletar(@PathVariable("id") String id) {
 
+        log.info("Deletando autor de ID: {} ", id);
+
         var idAutor = UUID.fromString(id);
         Optional<Autor> autorOptional = service.obterPorId(idAutor);
         if (autorOptional.isEmpty()) {
@@ -77,6 +84,7 @@ public class AutorController implements GenericController {
             @RequestParam(value = "nome", required = false) String nome,
             @RequestParam(value = "nacionalidade", required = false) String nacionalidade) {
 
+
         List<Autor> resultado = service.pesquisaByExample(nome, nacionalidade);
         List<AutorDTO> lista = resultado.stream()
                 .map(mapper::toDTO)
@@ -90,6 +98,9 @@ public class AutorController implements GenericController {
     public ResponseEntity<Void> atualizar(
             @PathVariable("id") String id,
             @RequestBody @Valid AutorDTO dto) {
+
+
+        log.info("Atualizando autor de ID: {} ", id);
 
         var idAutor = UUID.fromString(id);
         Optional<Autor> autorOptional = service.obterPorId(idAutor);
