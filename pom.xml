@@ -90,7 +90,7 @@
 							<rules>
 								<requireJavaVersion>
 									<version>21</version>
-									<message>Projeto requer Java 21. Por favor configure JAVA_HOME para apontar para JDK 21.</message>
+									<message>Projeto requer Java 21.</message>
 								</requireJavaVersion>
 							</rules>
 							<fail>true</fail>
@@ -98,6 +98,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -120,7 +121,19 @@
 							<version>${mapstruct.version}</version>
 						</path>
 					</annotationProcessorPaths>
-					<showWarnings>true</showWarnings>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -24,3 +24,15 @@ create table livro(
 	constraint chk_genero check (genero in('FICCAO', 'FANTASIA','MISTERIO','ROMANCE', 'BIOGRAFIA', 'CIENCIA'))
 
 );
+
+insert into usuario
+(id, login, senha, email, roles)
+values
+(uuid_generate_v4(),'gerente', 'marcos12?', 'gerente@email.com','{GERENTE}' );
+
+insert into client(
+id, cliente_id, cliente_secret, redirect_uri, scope)
+values
+(uuid_generate_v4(), 'client-prod', 'carol2630', 'http://localhost:8080/autorized', 'GERENTE' );
+
+
