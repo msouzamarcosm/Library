@@ -1,15 +1,16 @@
+server:
+  port: 64278 #${PORT:0}
+
 spring:
   application:
     name: library-api
-#  profiles:
-#    active: production
   output:
     ansi:
       enabled: ALWAYS
   datasource:
     url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/library}
-    username:  ${DATASOURCE_USERNAME:postgres}
-    password:  ${DATASOURCE_PASSWORD:postgres_password}
+    username: ${DATASOURCE_USERNAME:postgres}
+    password: ${DATASOURCE_PASSWORD:postgres_password}
     driver-class-name: org.postgresql.Driver
     hikari:
       max-lifetime: 1800000
@@ -24,9 +25,6 @@ spring:
       hibernate:
         format_sql: true
 
-
-
-
 logging:
   file:
     name: application.log
@@ -34,20 +32,21 @@ logging:
     root: warn
     io:
       github:
-        cursodsousa: trace
+        cursodsousa: info # trace
     org:
       springFramework:
-        web: debug
+        # web: debug
+      web: info
 
 management:
   server:
-    port: 9090
+    port: 0
   endpoints:
     web:
       exposure:
         include: "*"
 
-#production
+# Perfil de Produção
 ---
 spring:
   config:
@@ -56,7 +55,7 @@ spring:
   jpa:
     show-sql: false
 
-#homologacao
+# Perfil de Homologação
 ---
 spring:
   config:
@@ -64,5 +63,5 @@ spring:
       on-profile: homologacao
   jpa:
     show-sql: false
-  data-source:
+  datasource:
     url: jdbc:postgresql://localhost:5432/library
